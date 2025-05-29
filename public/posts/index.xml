@@ -6,17 +6,14 @@
     <description>Recent content in Posts on My New Hugo Site</description>
     <generator>Hugo -- 0.147.6</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 May 2025 18:57:09 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 31 Jan 2023 19:46:16 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Hello World</title>
-      <link>http://localhost:1313/posts/hello-world/</link>
-      <pubDate>Thu, 29 May 2025 18:57:09 +0800</pubDate>
-      <guid>http://localhost:1313/posts/hello-world/</guid>
-      <description>&lt;h3 id=&#34;title&#34;&gt;Title&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;This is a title&lt;/li&gt;
-&lt;/ul&gt;</description>
+      <title>Jager in Laravel</title>
+      <link>http://localhost:1313/posts/jager-in-laravel/</link>
+      <pubDate>Tue, 31 Jan 2023 19:46:16 +0800</pubDate>
+      <guid>http://localhost:1313/posts/jager-in-laravel/</guid>
+      <description>论如何将 Jaeger 放进 Laravel</description>
     </item>
   </channel>
 </rss>
