@@ -5,11 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
-<title>Categories | 智慧树</title>
+<title>单元测试(一) | 智慧树</title>
 <meta name="keywords" content="">
-<meta name="description" content="">
+<meta name="description" content="单测第一部分">
 <meta name="author" content="">
-<link rel="canonical" href="//localhost:1313/categories/">
+<link rel="canonical" href="//localhost:1313/posts/unit-test-1/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.8fe10233a706bc87f2e08b3cf97b8bd4c0a80f10675a143675d59212121037c0.css" integrity="sha256-j&#43;ECM6cGvIfy4Is8&#43;XuL1MCoDxBnWhQ2ddWSEhIQN8A=" rel="preload stylesheet" as="style">
 <link rel="icon" href="//localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="//localhost:1313/favicon-16x16.png">
@@ -18,8 +18,7 @@
 <link rel="mask-icon" href="//localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="//localhost:1313/categories/index.xml">
-<link rel="alternate" hreflang="en" href="//localhost:1313/categories/">
+<link rel="alternate" hreflang="en" href="//localhost:1313/posts/unit-test-1/">
 <noscript>
     <style>
         #theme-toggle,
@@ -59,7 +58,7 @@
 </noscript>
 </head>
 
-<body class="list" id="top">
+<body class="" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
         document.body.classList.add('dark');
@@ -103,12 +102,62 @@
     </nav>
 </header>
 <main class="main">
-<header class="page-header">
-    <h1>Categories</h1>
-</header>
 
-<ul class="terms-tags">
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      单元测试(一)
+    </h1>
+    <div class="post-meta"><span title='2023-03-30 08:28:57 +0800 CST'>March 30, 2023</span>
+
+</div>
+  </header> 
+  <div class="post-content"><h3 id="什么是单元测试">什么是单元测试<a hidden class="anchor" aria-hidden="true" href="#什么是单元测试">#</a></h3>
+<blockquote>
+<p>是指对软件中的最小可测试单元进行检查和验证</p></blockquote>
+<p>说人话就是对实现业务的不同 method / function 进行测试</p>
+<p>举个例子，假设我们的代码分层是 Controller &mdash;&gt; Service &mdash;&gt; Model，那么我们进行测试的部分就是 Service</p>
+<h3 id="为什么我们需要单元测试">为什么我们需要单元测试<a hidden class="anchor" aria-hidden="true" href="#为什么我们需要单元测试">#</a></h3>
+<p>很多刚刚接触单元测试的玩家都会有这个疑问，具体的代码我 run 一次就可以验证了，比如一个 Service 的方法大可以写一个 script 去调用执行，一个请求就更简单，直接发起请求看返回就可以，那为什么还要写代码去测试代码，甚至在有些语言中测试还成了一等公民</p>
+<p>确实，实际 run 一下是最全面稳妥的测试方式，但是这样难以解决以下几个问题</p>
+<ul>
+<li>可持续性</li>
+<li>回归测试</li>
+<li>外部依赖调用</li>
 </ul>
+<p>可持续性，是指上文提到的 script 调用或者接口请求，无法形成长期的测试方式，当然，如果你愿意将所有的 test scirpt 和请求 curl 都保留下来，这本质上就成了一种青春版的单元测试</p>
+<p>回归测试，是指我们在修改了其他功能模块时，可能会对旧有代码造成影响，理论上来讲，我们对系统进行了任何修改都应该重新验证系统的可靠性，实际上这也是测试可持续的延伸</p>
+<p>外部依赖调用，请想象一个场景，一个业务模块需要调用外部服务，而这个外部服务是未完成的 / 收费的 / 有白名单限制的&hellip;种种原因你难以直接调用到，此时你就需要 Mock 来模拟外部依赖的返回，实际上这不是单元测试可以解决的问题，但是 Mock 一般只为测试服务</p>
+<p>总的来说，单元测试是一件开发阶段较高投入但是具有长期收益的事情</p>
+<h3 id="为了单元测试应该准备什么">为了单元测试，应该准备什么<a hidden class="anchor" aria-hidden="true" href="#为了单元测试应该准备什么">#</a></h3>
+<p>首先最重要的，要保证自己的代码具有可测试性，这一点要展开有些复杂，我搜集了一番，简单整理如下</p>
+<ul>
+<li>广泛使用依赖注入，令自己的类 / 方法的依赖具有可替换性</li>
+<li>稳定性，在给定的情况下，程序输出应是可预测的</li>
+<li>代码保持低耦合</li>
+<li>谨慎设计私有方法，在 PHP 中，一般情况下私有方法只能通过反射的方式去测试</li>
+<li>谨慎使用静态方法，静态方法本身并非面向对象的而是面向过程的，和全局变量类似，静态方法不该依赖于外部环境，系统时间，网络等</li>
+<li>完整的数据库迁移，因为单元测试执行每一个 case 都需要一个空白的环境并重新构建基境</li>
+</ul>
+<p>这需要我们在编写代码的时候就开始考虑，我相信这也有利于书写出更易读的代码</p>
+<p>其次是一些基础的概念，这部分可以去百度了解一下</p>
+<ul>
+<li>单元测试框架，PHP 中就是 phpunit</li>
+<li>Mock，上文提到过，难以调用的外部依赖是应当被 Mock 掉的，PHP 提供了 Mockery 库来 mock 任意的类</li>
+<li>依赖注入，服务于 Mock</li>
+<li>断言，判断输出是否和预期一致的方法</li>
+</ul>
+<p>准备好了这些基础概念，之后我们将基于 Laravel 和 Hyperf 各自书写一个完整的单元测试</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
     </main>
     
 <footer class="footer">
