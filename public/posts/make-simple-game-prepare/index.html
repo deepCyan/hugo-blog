@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>做个小游戏——准备篇 | 智慧树</title>
+<meta name="keywords" content="">
+<meta name="description" content="闲着也是闲着">
+<meta name="author" content="">
+<link rel="canonical" href="//localhost:1313/posts/make-simple-game-prepare/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.8fe10233a706bc87f2e08b3cf97b8bd4c0a80f10675a143675d59212121037c0.css" integrity="sha256-j&#43;ECM6cGvIfy4Is8&#43;XuL1MCoDxBnWhQ2ddWSEhIQN8A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="//localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="//localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="//localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="//localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="//localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="//localhost:1313/posts/make-simple-game-prepare/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="//localhost:1313/" accesskey="h" title="智慧树 (Alt + H)">智慧树</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      做个小游戏——准备篇
+    </h1>
+    <div class="post-meta"><span title='2023-06-06 08:18:07 +0800 CST'>June 6, 2023</span>
+
+</div>
+  </header> 
+  <div class="post-content"><h3 id="目的">目的<a hidden class="anchor" aria-hidden="true" href="#目的">#</a></h3>
+<p>详细记录一下如何使用 Hyperf 构建一个简单的不能更简单的游戏——石头剪刀布（好像复杂的用 PHP 确实不太好）</p>
+<h3 id="仓库地址">仓库地址<a hidden class="anchor" aria-hidden="true" href="#仓库地址">#</a></h3>
+<ul>
+<li>业务仓库 <a href="https://gitee.com/wang-zhihui-release/stone_game">https://gitee.com/wang-zhihui-release/stone_game</a></li>
+<li>PB 仓库 <a href="https://gitee.com/wang-zhihui-release/stone_game_pb">https://gitee.com/wang-zhihui-release/stone_game_pb</a></li>
+</ul>
+<h3 id="采用数据传输方式">采用数据传输方式<a hidden class="anchor" aria-hidden="true" href="#采用数据传输方式">#</a></h3>
+<p>webSocket 是双全工的协议,不论在 client 还是 server 都需要 onMessage 回调来处理信息, 那么 onMessage 方法很自然就成为了程序的入口, 但是有一个新的问题: server-client 之间通信的信息格式是什么, 当然, 很自然可以想到 json, 但是这里我要使用 Protobuffer, 为什么选择 PB 而不是 json? 因为 json 解析出来是一个关联数组, 而 PB 可以轻易的转为对象, 在以前的文章中我们讨论过为什么不要使用数组, 在这个场景下对象是非常合适的, 这一点在后续的代码编写中会十分明显,当然了, 如果不了解 PB 建议先百度一下 PB 相关的基础知识, 还是很简单的</p>
+<h3 id="步骤">步骤<a hidden class="anchor" aria-hidden="true" href="#步骤">#</a></h3>
+<ul>
+<li>
+<p>首先新建一个工程 <code>composer create-project hyperf/hyperf-skeleton stone_game</code></p>
+</li>
+<li>
+<p>引入 ws-server <code>composer require hyperf/websocket-server</code></p>
+</li>
+<li>
+<p>增加 App\Controller\ServerController</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>  <span style="color:#66d9ef">namespace</span> <span style="color:#a6e22e">App\Controller</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">use</span> <span style="color:#a6e22e">Hyperf\Contract\OnCloseInterface</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">use</span> <span style="color:#a6e22e">Hyperf\Contract\OnMessageInterface</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">use</span> <span style="color:#a6e22e">Hyperf\Contract\OnOpenInterface</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">use</span> <span style="color:#a6e22e">Swoole\Http\Request</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">use</span> <span style="color:#a6e22e">Swoole\WebSocket\Frame</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ServerController</span> <span style="color:#66d9ef">implements</span> <span style="color:#a6e22e">OnMessageInterface</span>, <span style="color:#a6e22e">OnOpenInterface</span>, <span style="color:#a6e22e">OnCloseInterface</span>
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">onMessage</span>($server, <span style="color:#a6e22e">Frame</span> $frame)<span style="color:#f92672">:</span> <span style="color:#a6e22e">void</span>
+</span></span><span style="display:flex;"><span>      {
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">onOpen</span>($server, <span style="color:#a6e22e">Request</span> $request)<span style="color:#f92672">:</span> <span style="color:#a6e22e">void</span>
+</span></span><span style="display:flex;"><span>      {
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">onClose</span>($server, <span style="color:#a6e22e">int</span> $fd, <span style="color:#a6e22e">int</span> $reactorId)<span style="color:#f92672">:</span> <span style="color:#a6e22e">void</span>
+</span></span><span style="display:flex;"><span>      {
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>  }
+</span></span></code></pre></div></li>
+<li>
+<p>然后根据文档说明，增加 ws 配置和路由，我的路由是这样的</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>  <span style="color:#a6e22e">Router</span><span style="color:#f92672">::</span><span style="color:#a6e22e">addServer</span>(<span style="color:#e6db74">&#39;ws&#39;</span>, <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">Router</span><span style="color:#f92672">::</span><span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#39;/ws&#39;</span>, <span style="color:#a6e22e">App\Controller\ServerController</span><span style="color:#f92672">::</span><span style="color:#a6e22e">class</span>);
+</span></span><span style="display:flex;"><span>  });
+</span></span></code></pre></div></li>
+<li>
+<p>现在暂时放一下业务仓库, 我们新建一个新的 PB 仓库并将其做成 composer 包以进行内部引用, 如何打包这里不进行赘述, 只将关注点聚焦在 PB 文件中</p>
+</li>
+<li>
+<p>简单新建两个 pb 文件, base.proto 和 room.proto, 内容如下, 刚刚开始, 这里我们只简单定义一个加入房间的请求消息和一个广播消息</p>
+</li>
+<li>
+<p>base.proto</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-proto" data-lang="proto"><span style="display:flex;"><span>  syntax <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;proto3&#34;</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#f92672">package</span> Base;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#34;room.proto&#34;</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#66d9ef">message</span> <span style="color:#a6e22e">Data</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      <span style="color:#66d9ef">int64</span> server_time <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      <span style="color:#66d9ef">int32</span> version <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      <span style="color:#66d9ef">int64</span> rid <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      <span style="color:#66d9ef">string</span> error_message <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      <span style="color:#66d9ef">oneof</span> body {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>          Room.JoinRoomRequest join_room_request <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>          Room.JoinRoomBroad join_room_broad <span style="color:#f92672">=</span> <span style="color:#ae81ff">500</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      }<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  }<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div></li>
+<li>
+<p>room.proto</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-proto" data-lang="proto"><span style="display:flex;"><span>  syntax <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;proto3&#34;</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#f92672">package</span> Room;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#66d9ef">message</span> <span style="color:#a6e22e">JoinRoomRequest</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      <span style="color:#66d9ef">int32</span> rid <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      <span style="color:#66d9ef">int32</span> user_id <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  }<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#66d9ef">message</span> <span style="color:#a6e22e">JoinRoomBroad</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      <span style="color:#66d9ef">int32</span> rid <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      <span style="color:#66d9ef">int32</span> user_id <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  }<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div></li>
+<li>
+<p>引入仓库, 修改 composer.json</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;repositories&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;yunqing/stone_game_pb&#34;</span>: {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;vcs&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;url&#34;</span>: <span style="color:#e6db74">&#34;git@gitee.com:wang-zhihui-release/stone_game_pb.git&#34;</span>
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;require&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;yunqing/stone_game_pb&#34;</span>: <span style="color:#e6db74">&#34;~0.0.1&#34;</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+<li>
+<p>pb 仓库就绪, 继续回到 onMessage 中, 首先处理一下加入房间, 实际这个方法非常重要, 即便是最简单的情况下, 我们也需要思考几个问题</p>
+<ul>
+<li>如何进行消息的分发（加入房间就是一个消息，或者说事件）</li>
+<li>如何进行用户 id 和房间的绑定</li>
+<li>如何进行用户 id 和连接 fd 的绑定</li>
+</ul>
+</li>
+<li>
+<p>首先解决一下消息分发的问题，当然你也可以把所有分发写在 ServerController 中，只是代码很难看而已</p>
+</li>
+<li>
+<p>在 App\Provider 中新建 class DispatchMessage，基本结构如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>  <span style="color:#66d9ef">namespace</span> <span style="color:#a6e22e">App\Provider</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">use</span> <span style="color:#a6e22e">Base\BaseData</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DispatchMessage</span>
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">dispatch</span>(<span style="color:#a6e22e">BaseData</span> $baseData, <span style="color:#a6e22e">int</span> $fd)
+</span></span><span style="display:flex;"><span>      {
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">switch</span> ($baseData<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">getBody</span>()) {
+</span></span><span style="display:flex;"><span>              <span style="color:#66d9ef">default</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">\Exception</span>(<span style="color:#e6db74">&#39;Invalid body&#39;</span>, <span style="color:#ae81ff">400</span>);
+</span></span><span style="display:flex;"><span>          }
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>  }
+</span></span></code></pre></div></li>
+<li>
+<p>依赖这个类，我们就可以将不同的消息转发给不同的服务，只需要在 ServerController 调用它即可</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>  <span style="color:#66d9ef">protected</span> $disPatchMessage;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">__construct</span>(<span style="color:#a6e22e">LoggerFactory</span> $loggerFactory, <span style="color:#a6e22e">DispatchMessage</span> $disPatchMessage)
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>      $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">logger</span> <span style="color:#f92672">=</span> $loggerFactory<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#39;server_controller&#39;</span>);
+</span></span><span style="display:flex;"><span>      $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">disPatchMessage</span> <span style="color:#f92672">=</span> $disPatchMessage;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">onMessage</span>($server, <span style="color:#a6e22e">Frame</span> $frame)<span style="color:#f92672">:</span> <span style="color:#a6e22e">void</span>
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>      $baseData <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">BaseData</span>();
+</span></span><span style="display:flex;"><span>      $res <span style="color:#f92672">=</span> <span style="color:#a6e22e">base64_decode</span>($frame<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">data</span>);
+</span></span><span style="display:flex;"><span>      $baseData<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">mergeFromString</span>((<span style="color:#a6e22e">string</span>) $res);
+</span></span><span style="display:flex;"><span>      $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">logger</span><span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">info</span>(<span style="color:#e6db74">&#39;request message&#39;</span>, <span style="color:#a6e22e">json_decode</span>($baseData<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">serializeToJsonString</span>(), <span style="color:#66d9ef">true</span>));
+</span></span><span style="display:flex;"><span>      $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">disPatchMessage</span><span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">dispatch</span>($baseData, $frame<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">fd</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span></code></pre></div></li>
+<li>
+<p>累了, 剩下的以后再写</p>
+</li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="//localhost:1313/">智慧树</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head>
-	<meta name="generator" content="Hugo 0.147.6"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
-<title>智慧树</title>
-
-<meta name="description" content="">
+<title>Flutter 笔记 | 智慧树</title>
+<meta name="keywords" content="">
+<meta name="description" content="好像也用不太到">
 <meta name="author" content="">
-<link rel="canonical" href="//localhost:1313/">
+<link rel="canonical" href="//localhost:1313/posts/flutter-note/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.8fe10233a706bc87f2e08b3cf97b8bd4c0a80f10675a143675d59212121037c0.css" integrity="sha256-j&#43;ECM6cGvIfy4Is8&#43;XuL1MCoDxBnWhQ2ddWSEhIQN8A=" rel="preload stylesheet" as="style">
 <link rel="icon" href="//localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="//localhost:1313/favicon-16x16.png">
@@ -19,8 +18,7 @@
 <link rel="mask-icon" href="//localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="//localhost:1313/index.xml">
-<link rel="alternate" hreflang="en" href="//localhost:1313/">
+<link rel="alternate" hreflang="en" href="//localhost:1313/posts/flutter-note/">
 <noscript>
     <style>
         #theme-toggle,
@@ -60,7 +58,7 @@
 </noscript>
 </head>
 
-<body class="list" id="top">
+<body class="" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
         document.body.classList.add('dark');
@@ -103,133 +101,50 @@
         </ul>
     </nav>
 </header>
-<main class="main"> 
+<main class="main">
 
-<article class="first-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">gitlab ci 笔记
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>和 gitlab 第一次交手</p>
-  </div>
-  <footer class="entry-footer"><span title='2023-10-31 08:37:38 +0800 CST'>October 31, 2023</span></footer>
-  <a class="entry-link" aria-label="post link to gitlab ci 笔记" href="//localhost:1313/posts/flight-with-gitlab/"></a>
-</article>
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Flutter 笔记
+    </h1>
+    <div class="post-meta"><span title='2023-07-19 08:35:34 +0800 CST'>July 19, 2023</span>
 
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">Flutter 笔记
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>好像也用不太到</p>
-  </div>
-  <footer class="entry-footer"><span title='2023-07-19 08:35:34 +0800 CST'>July 19, 2023</span></footer>
-  <a class="entry-link" aria-label="post link to Flutter 笔记" href="//localhost:1313/posts/flutter-note/"></a>
-</article>
+</div>
+  </header> 
+  <div class="post-content"><ul>
+<li>
+<p>GridView 页面尺寸崩溃，一直提示 pixel over..什么的，模拟器出现黄色警告条，解决方法是设置 GirdView.count 中 childAspectRatio 的参数，需要手动试出来</p>
+</li>
+<li>
+<p>默认加载，不能在 initState 函数中使用 await 来进行修饰，一番搜索的解决方法是在 initState 函数中使用 Future.microtask 方法来做默认加载</p>
+</li>
+<li>
+<p>文件上传，使用的是腾讯的 Cos 的 flutter 插件，报用，我的场景是在上传完成后获取地址然后进行提交，但是它的 SDK 并不提供这种方法，它的成功是一个回调，但是很明显我不能将完整的提交逻辑写在文件上传成功的回调里，后来在 G 站找了一个 tencent_cos 的组件，直接使用了 HTTP 接口上传(和服务端逻辑差不多)，还是只需要服务端生成临时的 ticket 即可</p>
+</li>
+<li>
+<p>增减包后热更似乎失效，需要重新 run 一下</p>
+</li>
+<li>
+<p>Navigator 需要在&hellip;什么上下文中才可以使用，最开始我生成列表数据是直接写了一个函数以返回 Widget，但是这样植入 Navigator 后跳转会不可用，于是改成一个 class GetList extends StatelessWidget , 讲函数内容放在 build 方法中即可</p>
+</li>
+<li>
+<p>iOS 打包后无法在模拟器中运行了，似乎是打包的时候使用了 release 模式，但是开发时使用的是 debug 模式，改回来就好了，反正就&hellip;打包时候 xcode 改了什么东西，开发的时候就要改回来</p>
+</li>
+<li>
+<p>但是打 release 包也有时间限制，似乎一周之后也就停用了，需要重新 build，很烦，垃圾 Apple</p>
+</li>
+</ul>
 
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">做个小游戏-用户绑定
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>其实用缓存也不是不行</p>
-  </div>
-  <footer class="entry-footer"><span title='2023-06-07 08:27:04 +0800 CST'>June 7, 2023</span></footer>
-  <a class="entry-link" aria-label="post link to 做个小游戏-用户绑定" href="//localhost:1313/posts/make-simple-game-bind/"></a>
-</article>
 
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">做个小游戏——准备篇
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>闲着也是闲着</p>
   </div>
-  <footer class="entry-footer"><span title='2023-06-06 08:18:07 +0800 CST'>June 6, 2023</span></footer>
-  <a class="entry-link" aria-label="post link to 做个小游戏——准备篇" href="//localhost:1313/posts/make-simple-game-prepare/"></a>
-</article>
 
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">游戏服务器分流
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>这个是对游戏服务器分流的一个简易解决方案</p>
-  </div>
-  <footer class="entry-footer"><span title='2023-06-05 08:12:17 +0800 CST'>June 5, 2023</span></footer>
-  <a class="entry-link" aria-label="post link to 游戏服务器分流" href="//localhost:1313/posts/game-server-balance/"></a>
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
 </article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">Jaeger 导致的测试异常
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Jaeger导致的测试异常</p>
-  </div>
-  <footer class="entry-footer"><span title='2023-04-19 08:08:58 +0800 CST'>April 19, 2023</span></footer>
-  <a class="entry-link" aria-label="post link to Jaeger 导致的测试异常" href="//localhost:1313/posts/jaeger-exception/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">单元测试(三)
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>单测第三部分, 这一部分主要介绍一下 Hyperf 和 Laravel 的微小差异</p>
-  </div>
-  <footer class="entry-footer"><span title='2023-04-05 08:06:08 +0800 CST'>April 5, 2023</span></footer>
-  <a class="entry-link" aria-label="post link to 单元测试(三)" href="//localhost:1313/posts/unit-test-3/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">单元测试(二)
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>单测第二部分, 这一部分主要介绍一下 Laravel 如何进行单元测试</p>
-  </div>
-  <footer class="entry-footer"><span title='2023-04-03 08:50:23 +0800 CST'>April 3, 2023</span></footer>
-  <a class="entry-link" aria-label="post link to 单元测试(二)" href="//localhost:1313/posts/unit-test-2/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">请求参数过多的bug
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>请求参数过多的bug-php-swoole</p>
-  </div>
-  <footer class="entry-footer"><span title='2023-04-01 08:33:57 +0800 CST'>April 1, 2023</span></footer>
-  <a class="entry-link" aria-label="post link to 请求参数过多的bug" href="//localhost:1313/posts/swoole-many-params-bug/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">单元测试(一)
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>单测第一部分</p>
-  </div>
-  <footer class="entry-footer"><span title='2023-03-30 08:28:57 +0800 CST'>March 30, 2023</span></footer>
-  <a class="entry-link" aria-label="post link to 单元测试(一)" href="//localhost:1313/posts/unit-test-1/"></a>
-</article>
-<footer class="page-footer">
-  <nav class="pagination">
-    <a class="next" href="//localhost:1313/page/2/">Next&nbsp;&nbsp;»
-    </a>
-  </nav>
-</footer>
     </main>
     
 <footer class="footer">
