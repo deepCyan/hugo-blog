@@ -6,8 +6,29 @@
     <description>Recent content in Posts on 智慧树</description>
     <generator>Hugo -- 0.147.6</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 03 Apr 2023 08:50:23 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 05 Jun 2023 08:12:17 +0800</lastBuildDate>
     <atom:link href="//localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>游戏服务器分流</title>
+      <link>//localhost:1313/posts/game-server-balance/</link>
+      <pubDate>Mon, 05 Jun 2023 08:12:17 +0800</pubDate>
+      <guid>//localhost:1313/posts/game-server-balance/</guid>
+      <description>这个是对游戏服务器分流的一个简易解决方案</description>
+    </item>
+    <item>
+      <title>Jaeger 导致的测试异常</title>
+      <link>//localhost:1313/posts/jaeger-exception/</link>
+      <pubDate>Wed, 19 Apr 2023 08:08:58 +0800</pubDate>
+      <guid>//localhost:1313/posts/jaeger-exception/</guid>
+      <description>Jaeger导致的测试异常</description>
+    </item>
+    <item>
+      <title>单元测试(三)</title>
+      <link>//localhost:1313/posts/unit-test-3/</link>
+      <pubDate>Wed, 05 Apr 2023 08:06:08 +0800</pubDate>
+      <guid>//localhost:1313/posts/unit-test-3/</guid>
+      <description>单测第三部分, 这一部分主要介绍一下 Hyperf 和 Laravel 的微小差异</description>
+    </item>
     <item>
       <title>单元测试(二)</title>
       <link>//localhost:1313/posts/unit-test-2/</link>

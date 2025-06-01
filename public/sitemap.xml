@@ -3,12 +3,21 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>//localhost:1313/posts/</loc>
-    <lastmod>2023-04-03T08:50:23+08:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/posts/unit-test-2/</loc>
-    <lastmod>2023-04-03T08:50:23+08:00</lastmod>
+    <lastmod>2023-06-05T08:12:17+08:00</lastmod>
   </url><url>
     <loc>//localhost:1313/</loc>
+    <lastmod>2023-06-05T08:12:17+08:00</lastmod>
+  </url><url>
+    <loc>//localhost:1313/posts/game-server-balance/</loc>
+    <lastmod>2023-06-05T08:12:17+08:00</lastmod>
+  </url><url>
+    <loc>//localhost:1313/posts/jaeger-exception/</loc>
+    <lastmod>2023-04-19T08:08:58+08:00</lastmod>
+  </url><url>
+    <loc>//localhost:1313/posts/unit-test-3/</loc>
+    <lastmod>2023-04-05T08:06:08+08:00</lastmod>
+  </url><url>
+    <loc>//localhost:1313/posts/unit-test-2/</loc>
     <lastmod>2023-04-03T08:50:23+08:00</lastmod>
   </url><url>
     <loc>//localhost:1313/posts/swoole-many-params-bug/</loc>

@@ -5,11 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
-<title>Posts | 智慧树</title>
+<title>Jaeger 导致的测试异常 | 智慧树</title>
 <meta name="keywords" content="">
-<meta name="description" content="Posts - 智慧树">
+<meta name="description" content="Jaeger导致的测试异常">
 <meta name="author" content="">
-<link rel="canonical" href="//localhost:1313/posts/">
+<link rel="canonical" href="//localhost:1313/posts/jaeger-exception/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.8fe10233a706bc87f2e08b3cf97b8bd4c0a80f10675a143675d59212121037c0.css" integrity="sha256-j&#43;ECM6cGvIfy4Is8&#43;XuL1MCoDxBnWhQ2ddWSEhIQN8A=" rel="preload stylesheet" as="style">
 <link rel="icon" href="//localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="//localhost:1313/favicon-16x16.png">
@@ -18,8 +18,7 @@
 <link rel="mask-icon" href="//localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="//localhost:1313/posts/index.xml">
-<link rel="alternate" hreflang="en" href="//localhost:1313/posts/">
+<link rel="alternate" hreflang="en" href="//localhost:1313/posts/jaeger-exception/">
 <noscript>
     <style>
         #theme-toggle,
@@ -59,7 +58,7 @@
 </noscript>
 </head>
 
-<body class="list" id="top">
+<body class="" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
         document.body.classList.add('dark');
@@ -102,131 +101,60 @@
         </ul>
     </nav>
 </header>
-<main class="main"> 
-<header class="page-header">
-  <h1>
-    Posts
-  </h1>
-</header>
+<main class="main">
 
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">游戏服务器分流
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>这个是对游戏服务器分流的一个简易解决方案</p>
-  </div>
-  <footer class="entry-footer"><span title='2023-06-05 08:12:17 +0800 CST'>June 5, 2023</span></footer>
-  <a class="entry-link" aria-label="post link to 游戏服务器分流" href="//localhost:1313/posts/game-server-balance/"></a>
-</article>
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Jaeger 导致的测试异常
+    </h1>
+    <div class="post-meta"><span title='2023-04-19 08:08:58 +0800 CST'>April 19, 2023</span>
 
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">Jaeger 导致的测试异常
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Jaeger导致的测试异常</p>
-  </div>
-  <footer class="entry-footer"><span title='2023-04-19 08:08:58 +0800 CST'>April 19, 2023</span></footer>
-  <a class="entry-link" aria-label="post link to Jaeger 导致的测试异常" href="//localhost:1313/posts/jaeger-exception/"></a>
-</article>
+</div>
+  </header> 
+  <div class="post-content"><p>事情的起因是要给一个新的 hyperf2.2 项目集成单元测试</p>
+<p>本来很简单，把以前的东西直接放进去就好了，最多增减几个 setup 的 mock 类</p>
+<p>但是诡异的事情出现了</p>
+<p>执行 compsoer test 出现这个错误</p>
+<blockquote>
+<p>Script co-phounit -prepend test/ootstrap,php -C phpunitxml &ndash;colors-almays &ndash;testdox handling the test event returmed with eror code 25</p></blockquote>
+<p>当然什么都看不出来，于是加个 -vvv 的参数看看，依旧没什么有用的信息甚至还抛出来了更离奇的异常（这个至今不知道怎么回事）</p>
+<blockquote>
+<p>pentl_fork() has been disabled for security reason in &hellip;</p></blockquote>
+<p>于是继续打 var_dump ，我想到开始是要初始化容器的，是不是在构造某个类的时候出了问题，于是在容器的 make 方法中一个个打出来，看是哪个类出了问题，果然发现了异样，有问题的项目打印出来的类名远少于正常执行的对照项目（是的，我有一个可以 run 的项目），并且最后几个类名是 Tracer 相关的，看来问题出在 Tracer 上</p>
+<p>然后我发现了和对照项目的差异，对照项目的默认 tracer driver 是 zipkin，而当前默认的是 jaeger</p>
+<p>于是换成默认 zipkin，成功啦</p>
+<p>可是，为什么呢，于是我一个个类追了进去，终于在 Jaeger\ThriftUdpTransport::doOpen 中找到了原因</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">doOpen</span>()<span style="color:#f92672">:</span> <span style="color:#a6e22e">void</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">socket</span> <span style="color:#f92672">=</span> <span style="color:#f92672">@</span><span style="color:#a6e22e">socket_create</span>(<span style="color:#a6e22e">AF_INET</span>, <span style="color:#a6e22e">SOCK_DGRAM</span>, <span style="color:#a6e22e">SOL_UDP</span>);
+</span></span><span style="display:flex;"><span>    $ok <span style="color:#f92672">=</span> <span style="color:#f92672">@</span><span style="color:#a6e22e">socket_connect</span>($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">socket</span>, $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">host</span>, $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">port</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ($ok <span style="color:#f92672">===</span> <span style="color:#66d9ef">false</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">TTransportException</span>(<span style="color:#e6db74">&#39;socket_connect failed&#39;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我发现这里的调用函数被抑制了，这是可以理解的，因为 Jaeger 只是一个监控，不应当影响主业务，但是这里的 @ 导致我无法得到任何信息，去掉 @ 后，再次执行，终于看到了清晰的报错</p>
+<blockquote>
+<p>PHP Fatal error:  Uncaught Swoole\Error: API must be called in the coroutine in @swoole-src/library/ext/sockets.php:21</p></blockquote>
+<p>很好，触及了知识盲区，不知道为什么会这样，但是可以解决，在 test/bootstrap.php 做如下修改</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">!</span> <span style="color:#a6e22e">defined</span>(<span style="color:#e6db74">&#39;SWOOLE_HOOK_FLAGS&#39;</span>) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">define</span>(<span style="color:#e6db74">&#39;SWOOLE_HOOK_FLAGS&#39;</span>, <span style="color:#a6e22e">SWOOLE_HOOK_ALL</span> <span style="color:#f92672">^</span> <span style="color:#a6e22e">SWOOLE_HOOK_SOCKETS</span>);
+</span></span></code></pre></div><p>既然你要协程环境，那老子不 hook 你就是了</p>
+<p>然后继续报错</p>
+<blockquote>
+<p>Uncaught Swoole\Error: API must be called in the coroutine &hellip; gethostbyname</p></blockquote>
+<p>继续修改如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">!</span> <span style="color:#a6e22e">defined</span>(<span style="color:#e6db74">&#39;SWOOLE_HOOK_FLAGS&#39;</span>) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">define</span>(<span style="color:#e6db74">&#39;SWOOLE_HOOK_FLAGS&#39;</span>, <span style="color:#a6e22e">SWOOLE_HOOK_ALL</span> <span style="color:#f92672">^</span> <span style="color:#a6e22e">SWOOLE_HOOK_SOCKETS</span> <span style="color:#f92672">^</span> <span style="color:#a6e22e">SWOOLE_HOOK_BLOCKING_FUNCTION</span>);
+</span></span></code></pre></div><p>摆平，此时默认是 jaeger 也可以正常开启测试</p>
+<p>但是讲道理，这种情况最好是在 testing env 中给一个另外的值来处理，大可以不必死磕它</p>
 
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">单元测试(三)
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>单测第三部分, 这一部分主要介绍一下 Hyperf 和 Laravel 的微小差异</p>
-  </div>
-  <footer class="entry-footer"><span title='2023-04-05 08:06:08 +0800 CST'>April 5, 2023</span></footer>
-  <a class="entry-link" aria-label="post link to 单元测试(三)" href="//localhost:1313/posts/unit-test-3/"></a>
-</article>
 
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">单元测试(二)
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>单测第二部分, 这一部分主要介绍一下 Laravel 如何进行单元测试</p>
   </div>
-  <footer class="entry-footer"><span title='2023-04-03 08:50:23 +0800 CST'>April 3, 2023</span></footer>
-  <a class="entry-link" aria-label="post link to 单元测试(二)" href="//localhost:1313/posts/unit-test-2/"></a>
-</article>
 
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">请求参数过多的bug
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>请求参数过多的bug-php-swoole</p>
-  </div>
-  <footer class="entry-footer"><span title='2023-04-01 08:33:57 +0800 CST'>April 1, 2023</span></footer>
-  <a class="entry-link" aria-label="post link to 请求参数过多的bug" href="//localhost:1313/posts/swoole-many-params-bug/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">单元测试(一)
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>单测第一部分</p>
-  </div>
-  <footer class="entry-footer"><span title='2023-03-30 08:28:57 +0800 CST'>March 30, 2023</span></footer>
-  <a class="entry-link" aria-label="post link to 单元测试(一)" href="//localhost:1313/posts/unit-test-1/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">PHP 代码格式化和静态检查
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>本文将介绍如何在 Laravel 中实现自动的代码格式化和语法静态检查，其他框架大同小异</p>
-  </div>
-  <footer class="entry-footer"><span title='2023-03-10 08:23:25 +0800 CST'>March 10, 2023</span></footer>
-  <a class="entry-link" aria-label="post link to PHP 代码格式化和静态检查" href="//localhost:1313/posts/php-code-fixer-static/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">Golang Memery Boom
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Go 程序的一次内存爆炸</p>
-  </div>
-  <footer class="entry-footer"><span title='2023-03-02 08:12:25 +0800 CST'>March 2, 2023</span></footer>
-  <a class="entry-link" aria-label="post link to Golang Memery Boom" href="//localhost:1313/posts/golang-memery-boom/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">为什么要引入对象来替代数组
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>省流版本：对象比数组读起来方便</p>
-  </div>
-  <footer class="entry-footer"><span title='2023-02-16 08:09:24 +0800 CST'>February 16, 2023</span></footer>
-  <a class="entry-link" aria-label="post link to 为什么要引入对象来替代数组" href="//localhost:1313/posts/object-replace-array/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">Jager in Laravel
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>论如何将 Jaeger 放进 Laravel</p>
-  </div>
-  <footer class="entry-footer"><span title='2023-01-31 19:46:16 +0800 CST'>January 31, 2023</span></footer>
-  <a class="entry-link" aria-label="post link to Jager in Laravel" href="//localhost:1313/posts/jager-in-laravel/"></a>
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
 </article>
     </main>
     
